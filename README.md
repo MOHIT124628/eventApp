@@ -72,7 +72,7 @@ CREATE TABLE event (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     ownerid INT,
-    FOREIGN KEY (ownerid) REFERENCES users(userid)
+    FOREIGN KEY (ownerid) REFERENCES user(userid)
 );
 
 CREATE TABLE booking (
@@ -80,8 +80,8 @@ CREATE TABLE booking (
     eventid INT,
     userid INT,
     booking_date DATE NOT NULL,
-    FOREIGN KEY (eventid) REFERENCES events(eventid),
-    FOREIGN KEY (userid) REFERENCES users(userid)
+    FOREIGN KEY (eventid) REFERENCES event(eventid),
+    FOREIGN KEY (userid) REFERENCES user(userid)
 );
 
 CREATE TABLE reviews (
@@ -90,21 +90,21 @@ CREATE TABLE reviews (
     userid INT,
     rating INT NOT NULL,
     comment TEXT,
-    FOREIGN KEY (eventid) REFERENCES events(eventid),
-    FOREIGN KEY (userid) REFERENCES users(userid)
+    FOREIGN KEY (eventid) REFERENCES event(eventid),
+    FOREIGN KEY (userid) REFERENCES user(userid)
 );
 Sample Data Insertion
 
 -- Insert sample user
-INSERT INTO users (username, password, role) VALUES ('john_doe', 'password123', 'Owner');
-INSERT INTO users (username, password, role) VALUES ('jane_smith', 'password123', 'Attendee');
+INSERT INTO user (username, password, role) VALUES ('john_doe', 'password123', 'Owner');
+INSERT INTO user (username, password, role) VALUES ('jane_smith', 'password123', 'Attendee');
 
 -- Insert sample event
-INSERT INTO events (eventname, event_img, venuname, total_seataval, price, address, start_date, end_date, ownerid) 
+INSERT INTO event (eventname, event_img, venuname, total_seataval, price, address, start_date, end_date, ownerid) 
 VALUES ('Concert', 'img/concert.jpg', 'Music Hall', 100, 50.00, '123 Music Ave', '2024-07-01', '2024-07-02', 1);
 
 -- Insert sample booking
-INSERT INTO bookings (eventid, userid, booking_date) VALUES (1, 2, '2024-06-20');
+INSERT INTO booking (eventid, userid, booking_date) VALUES (1, 2, '2024-06-20');
 
 -- Insert sample reviews
 INSERT INTO reviews (eventid, userid, rating, comment) VALUES (1, 2, 5, 'Great concert!');
