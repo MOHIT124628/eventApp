@@ -5,20 +5,20 @@ Database Schema:
 Tables
 The database consists of the following tables:
 
-users
-events
-bookings
+user
+event
+booking
 reviews
 
 Table Definitions
-users
+user
 Columns:
 userid (INT, PRIMARY KEY, AUTO_INCREMENT): Unique identifier for each user.
 username (VARCHAR(255)): Username of the user.
 password (VARCHAR(255)): Password of the user.
 role (VARCHAR(50)): Role of the user (e.g., 'Owner', 'Attendee').
 
-events
+event
 Columns:
 eventid (INT, PRIMARY KEY, AUTO_INCREMENT): Unique identifier for each event.
 eventname (VARCHAR(255)): Name of the event.
@@ -31,7 +31,7 @@ start_date (DATE): Start date of the event.
 end_date (DATE): End date of the event.
 ownerid (INT, FOREIGN KEY): ID of the user who created the event.
 
-bookings
+booking
 Columns:
 bookingid (INT, PRIMARY KEY, AUTO_INCREMENT): Unique identifier for each booking.
 eventid (INT, FOREIGN KEY): ID of the booked event.
@@ -50,18 +50,18 @@ comment (TEXT): Review comment.
 Sample SQL Scripts
 Create Database and Tables
 
-CREATE DATABASE event_management;
+CREATE DATABASE e_book;
 
-USE event_management;
+USE e_book;
 
-CREATE TABLE users (
+CREATE TABLE user (
     userid INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     role VARCHAR(50) NOT NULL
 );
 
-CREATE TABLE events (
+CREATE TABLE event (
     eventid INT PRIMARY KEY AUTO_INCREMENT,
     eventname VARCHAR(255) NOT NULL,
     event_img VARCHAR(255) NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE events (
     FOREIGN KEY (ownerid) REFERENCES users(userid)
 );
 
-CREATE TABLE bookings (
+CREATE TABLE booking (
     bookingid INT PRIMARY KEY AUTO_INCREMENT,
     eventid INT,
     userid INT,
@@ -95,15 +95,15 @@ CREATE TABLE reviews (
 );
 Sample Data Insertion
 
--- Insert sample users
+-- Insert sample user
 INSERT INTO users (username, password, role) VALUES ('john_doe', 'password123', 'Owner');
 INSERT INTO users (username, password, role) VALUES ('jane_smith', 'password123', 'Attendee');
 
--- Insert sample events
+-- Insert sample event
 INSERT INTO events (eventname, event_img, venuname, total_seataval, price, address, start_date, end_date, ownerid) 
 VALUES ('Concert', 'img/concert.jpg', 'Music Hall', 100, 50.00, '123 Music Ave', '2024-07-01', '2024-07-02', 1);
 
--- Insert sample bookings
+-- Insert sample booking
 INSERT INTO bookings (eventid, userid, booking_date) VALUES (1, 2, '2024-06-20');
 
 -- Insert sample reviews
