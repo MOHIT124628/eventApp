@@ -10,42 +10,6 @@ event
 booking
 reviews
 
-Table Definitions
-user
-Columns:
-userid (INT, PRIMARY KEY, AUTO_INCREMENT): Unique identifier for each user.
-username (VARCHAR(255)): Username of the user.
-password (VARCHAR(255)): Password of the user.
-role (VARCHAR(50)): Role of the user (e.g., 'Owner', 'Attendee').
-
-event
-Columns:
-eventid (INT, PRIMARY KEY, AUTO_INCREMENT): Unique identifier for each event.
-eventname (VARCHAR(255)): Name of the event.
-event_img (VARCHAR(255)): Image URL of the event.
-venuname (VARCHAR(255)): Venue name where the event is held.
-total_seataval (INT): Total seats available for the event.
-price (DECIMAL(10, 2)): Price of the event ticket.
-address (VARCHAR(255)): Address of the event venue.
-start_date (DATE): Start date of the event.
-end_date (DATE): End date of the event.
-ownerid (INT, FOREIGN KEY): ID of the user who created the event.
-
-booking
-Columns:
-bookingid (INT, PRIMARY KEY, AUTO_INCREMENT): Unique identifier for each booking.
-eventid (INT, FOREIGN KEY): ID of the booked event.
-userid (INT, FOREIGN KEY): ID of the user who booked the event.
-booking_date (DATE): Date when the booking was made.
-
-reviews
-Columns:
-reviewid (INT, PRIMARY KEY, AUTO_INCREMENT): Unique identifier for each review.
-eventid (INT, FOREIGN KEY): ID of the reviewed event.
-userid (INT, FOREIGN KEY): ID of the user who wrote the review.
-rating (INT): Rating given by the user.
-comment (TEXT): Review comment.
-
 
 Sample SQL Scripts
 Create Database and Tables
@@ -55,44 +19,60 @@ CREATE DATABASE e_book;
 USE e_book;
 
 CREATE TABLE user (
-    userid INT PRIMARY KEY AUTO_INCREMENT,
-    username VARCHAR(255) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(50) NOT NULL
+    userid INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(45),
+    username VARCHAR(45),
+    password VARCHAR(45),
+    email VARCHAR(45),
+    phone_number VARCHAR(45),
+    city VARCHAR(45),
+    role ENUM('customer', 'Owner'),
+    created_date TIMESTAMP,
+    last_date TIMESTAMP
 );
 
+
 CREATE TABLE event (
-    eventid INT PRIMARY KEY AUTO_INCREMENT,
-    eventname VARCHAR(255) NOT NULL,
-    event_img VARCHAR(255) NOT NULL,
-    venuname VARCHAR(255) NOT NULL,
-    total_seataval INT NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    address VARCHAR(255) NOT NULL,
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
-    ownerid INT,
-    FOREIGN KEY (ownerid) REFERENCES user(userid)
+    eventid INT AUTO_INCREMENT PRIMARY KEY,
+    eventname VARCHAR(450),
+    description VARCHAR(450),
+    start_date VARCHAR(45),
+    end_date VARCHAR(45),
+    venuname VARCHAR(450),
+    address VARCHAR(450),
+    total_seataval MEDIUMTEXT,
+    event_img VARCHAR(4500),
+    price DOUBLE,
+    came VARCHAR(450)
 );
 
 CREATE TABLE booking (
-    bookingid INT PRIMARY KEY AUTO_INCREMENT,
-    eventid INT,
-    userid INT,
-    booking_date DATE NOT NULL,
-    FOREIGN KEY (eventid) REFERENCES event(eventid),
-    FOREIGN KEY (userid) REFERENCES user(userid)
+    bookingid INT AUTO_INCREMENT PRIMARY KEY,
+    e_eventid INT,
+    u_userid INT,
+    uname VARCHAR(45),
+    uemail VARCHAR(45),
+    phone_number BIGINT,
+    number_ticketaval BIGINT,
+    totalprice DOUBLE,
+    booking_date VARCHAR(45),
+    payment_mode ENUM('card', 'upi', 'cash')
 );
 
+
 CREATE TABLE reviews (
-    reviewid INT PRIMARY KEY AUTO_INCREMENT,
-    eventid INT,
-    userid INT,
-    rating INT NOT NULL,
-    comment TEXT,
-    FOREIGN KEY (eventid) REFERENCES event(eventid),
-    FOREIGN KEY (userid) REFERENCES user(userid)
+    reviewid INT AUTO_INCREMENT PRIMARY KEY,
+    evid INT,
+    usid INT,
+    u_name VARCHAR(45),
+    u_email VARCHAR(45),
+    rating INT,
+    title VARCHAR(45),
+    description VARCHAR(450),
+    FOREIGN KEY (evid) REFERENCES events(eventid),
+    FOREIGN KEY (usid) REFERENCES users(userid)
 );
+
 Sample Data Insertion
 
 -- Insert sample user
